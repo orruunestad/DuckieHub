@@ -1,0 +1,58 @@
+local UIS = game:GetService('UserInputService')
+local Player = game:GetService('Players').LocalPlayer
+local Camera = workspace.CurrentCamera
+
+local Flying = false
+
+local function teleportUp()
+    local character = Player.Character
+    if character then
+        local rootPart = character:WaitForChild('HumanoidRootPart')
+        rootPart.CFrame = rootPart.CFrame + Vector3.new(0, 10, 0)
+    end
+end
+
+local function toggleFly()
+    Flying = not Flying
+    
+    if Flying then
+        teleportUp()
+
+        local char = Player.Character
+        local rootPart = char:WaitForChild('HumanoidRootPart')
+        local hum = char:WaitForChild('Humanoid')
+        hum.PlatformStand = true
+
+        local currentCF = rootPart.CFrame
+
+        while Flying and task.wait() do
+            local add = Vector3.new(0, 0, 0)
+
+            if UIS:IsKeyDown(Enum.KeyCode.W) then add += Camera.CFrame.LookVector end
+            if UIS:IsKeyDown(Enum.KeyCode.S) then add -= Camera.CFrame.LookVector end
+            if UIS:IsKeyDown(Enum.KeyCode.D) then add += Camera.CFrame.RightVector end
+            if UIS:IsKeyDown(Enum.KeyCode.A) then add -= Camera.CFrame.RightVector end
+            if UIS:IsKeyDown(Enum.KeyCode.E) then add += Camera.CFrame.UpVector end
+            if UIS:IsKeyDown(Enum.KeyCode.Q) then add -= Camera.CFrame.UpVector end
+
+            rootPart.AssemblyLinearVelocity = Vector3.zero
+            rootPart.AssemblyAngularVelocity = Vector3.zero
+
+            currentCF += add
+            rootPart.CFrame = CFrame.lookAt(
+                currentCF.Position,
+                currentCF.Position + (Camera.CFrame.LookVector * 2)
+            )
+        end
+
+        hum.PlatformStand = false
+    end
+end
+
+Player.Chatted:Connect(function(MSG)
+    if MSG:lower() == '/fly' then
+        toggleFly()
+    elseif MSG:lower() == '/unfly' then
+        Flying = false
+    end
+end)
