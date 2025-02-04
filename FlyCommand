@@ -1,8 +1,11 @@
-OrionLib:MakeNotification({
-	Name = "Duckie Hub",
-	Content = "To fly, say "/fly" in chat and the same for "/unfly".,
-	Image = "rbxassetid://4483345998",
-	Time = 5
+local NotificationBindable = Instance.new("BindableFunction")
+
+game.StarterGui:SetCore("SendNotification", {
+    Title = "Duckie Hub";
+    Text = "Say "/fly" in chat to start flying and the same for "/unfly"!";
+    Duration = 20;
+    Button1 = "Dismiss";
+    Callback = NotificationBindable;
 })
 
 local UIS = game:GetService('UserInputService')
