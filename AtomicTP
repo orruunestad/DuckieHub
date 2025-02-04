@@ -1,0 +1,14 @@
+local UIS = game:GetService("UserInputService")
+local Player = game:GetService("Players").LocalPlayer
+
+local targetPosition = Vector3.new(1046, 20, 22997)
+
+local function teleportToCoordinates()
+    local character = Player.Character
+    if character then
+        local rootPart = character:WaitForChild("HumanoidRootPart")
+        rootPart.CFrame = CFrame.new(targetPosition)
+    end
+end
+
+teleportToCoordinates()
