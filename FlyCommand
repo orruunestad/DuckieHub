@@ -1,3 +1,10 @@
+OrionLib:MakeNotification({
+	Name = "Duckie Hub",
+	Content = "To fly, say "/fly" in chat and the same for "/unfly".,
+	Image = "rbxassetid://4483345998",
+	Time = 5
+})
+
 local UIS = game:GetService('UserInputService')
 local Player = game:GetService('Players').LocalPlayer
 local Camera = workspace.CurrentCamera
